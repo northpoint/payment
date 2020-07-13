@@ -1,0 +1,44 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+variables:
+
+ # Container registry service connection established during pipeline creation
+  dockerfilePath: '**/docker/payment/Dockerfile'
+  tag: '$(Build.BuildId)'
+  serviceName: payment
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+    - repository: microservicesdemo
+      type: github
+      name: northpoint/microservices-demo
+      endpoint: github-svcconn
+      ref: kevin-azure-pipelines
+
+stages:
+- stage: DockerBuildPush
+  displayName: Docker Build & Push stage
+  jobs:  
+  - template: /pipeline-templates/docker-builddeploy-pipeline.yaml@microservicesdemo  # Template reference
+    parameters:
+      tag: $(tag)
+      acrRepo: $(serviceName)
+      dockerfilePath: $(dockerfilePath)
+      buildContext: $(Build.Repository.LocalPath)
+      
+- stage: HelmDeploy
+  displayName: Helm Deploy
+  jobs:
+  - template: /pipeline-templates/helm-deploy-pipeline.yaml@microservicesdemo
+    parameters:
+      serviceName: $(serviceName)
+      image: $(serviceName):$(tag)
