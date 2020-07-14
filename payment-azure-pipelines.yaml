@@ -8,7 +8,6 @@ trigger:
 
 variables:
 
- # Container registry service connection established during pipeline creation
   dockerfilePath: '**/docker/payment/Dockerfile'
   tag: '$(Build.BuildId)'
   serviceName: payment
@@ -22,7 +21,6 @@ resources:
       type: github
       name: northpoint/microservices-demo
       endpoint: github-svcconn
-      ref: kevin-azure-pipelines
 
 stages:
 - stage: DockerBuildPush
