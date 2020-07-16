@@ -8,6 +8,8 @@ RUN cd /go/src/github.com/microservices-demo/payment/ && gvt restore
 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/main github.com/microservices-demo/payment/cmd/paymentsvc
 
+RUN setcap 'cap_net_bind_service=+ep' /app/main
+
 CMD ["/app/main", "-port=80"]
 
 #EXPOSE 80
