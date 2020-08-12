@@ -27,7 +27,7 @@ stages:
 - stage: SecurityScan
   displayName: Security Scan
   jobs:
-  - template: /pipeline-templates/security-scan-pipeline.yaml
+  - template: /pipeline-templates/security-scan-pipeline.yaml@microservicesdemo
     parameters:
       projectKey: $(serviceName)
       projectVersion: $(tag)
