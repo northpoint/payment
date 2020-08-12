@@ -21,6 +21,7 @@ resources:
       type: github
       name: northpoint/microservices-demo
       endpoint: github-svcconn
+      ref: kevin-securityscan
 
 stages:
 - stage: SecurityScan
@@ -31,7 +32,7 @@ stages:
       projectKey: $(serviceName)
       projectVersion: $(tag)
       cliSources: '/'
-      
+
 - stage: DockerBuildPush
   displayName: Docker Build & Push stage
   jobs:  
