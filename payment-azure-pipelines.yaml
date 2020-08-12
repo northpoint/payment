@@ -31,7 +31,7 @@ stages:
     parameters:
       projectKey: $(serviceName)
       projectVersion: $(tag)
-      cliSources: '/'
+      cliSources: $(Build.Repository.LocalPath)
 
 - stage: DockerBuildPush
   displayName: Docker Build & Push stage
