@@ -25,7 +25,6 @@ resources:
       type: github
       name: northpoint/microservices-demo
       endpoint: github-svcconn
-      ref: kevin-securityscan
 
 stages:
 - stage: SecurityScan
